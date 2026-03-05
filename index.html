@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TicoAutos</title>
+
+    <script>
+        const token = sessionStorage.getItem("token");
+
+        if (token) {
+            window.location.href = "./pages/app/home.html";
+        } else {
+            window.location.href = "./pages/auth/login.html";
+        }
+    </script>
+
+</head>
+
+<body>
+</body>
+
+</html>

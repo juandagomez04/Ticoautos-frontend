@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Registro - TicoAutos</title>
+    <link rel="stylesheet" href="../../css/base/reset.css" />
+    <link rel="stylesheet" href="../../css/base/main.css" />
+    <link rel="stylesheet" href="../../css/auth/auth.css" />
+</head>
+
+<body>
+    <main class="card">
+        <h1>Crear cuenta</h1>
+
+        <form id="registerForm">
+            <label>Nombre</label>
+            <input id="name" placeholder="Nombre" required />
+
+            <label>Apellido</label>
+            <input id="lastName" placeholder="Apellido" required />
+
+            <label>Email</label>
+            <input id="email" type="email" placeholder="Email" required />
+
+            <label>Contraseña</label>
+            <input id="password" type="password" minlength="6" placeholder="Contraseña" required />
+
+            <button type="submit">Registrarme</button>
+        </form>
+
+        <p id="msg"></p>
+        <p>¿Ya tienes cuenta? <a href="./login.html">Inicia sesión</a></p>
+    </main>
+
+    <script type="module" src="../../js/auth/register.js"></script>
+</body>
+
+</html>
