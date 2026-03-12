@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicoAutos | Mis vehículos</title>
+
+    <link rel="stylesheet" href="../../css/base/global.css">
+    <link rel="stylesheet" href="../../css/dashboard/vehicle.my.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container navbar">
+            <a href="../public/home.html" class="brand">TicoAutos</a>
+
+            <nav class="nav-links">
+                <a href="./dashboard.html">Dashboard</a>
+                <a href="./vehicle.my.html" class="active">Mis vehículos</a>
+                <a href="./vehicle.create.html">Publicar</a>
+                <a href="./inbox.list.html">Inbox</a>
+                <a href="../auth/login.html" id="logoutLink">Cerrar sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container vehicle-my-page">
+        <section class="page-top card">
+            <div>
+                <span class="page-tag">Gestión de publicaciones</span>
+                <h1>Mis vehículos</h1>
+                <p>
+                    Administra tus vehículos publicados, actualiza su estado
+                    y accede rápidamente a las acciones principales.
+                </p>
+            </div>
+
+            <div class="page-actions">
+                <a href="./vehicle.create.html" class="btn btn-primary">+ Publicar vehículo</a>
+            </div>
+        </section>
+
+        <section class="toolbar card">
+            <div class="toolbar-left">
+                <div class="input-group search-group">
+                    <label for="searchVehicle">Buscar vehículo</label>
+                    <input type="text" id="searchVehicle" placeholder="Buscar por marca o modelo">
+                </div>
+
+                <div class="input-group filter-group">
+                    <label for="statusFilter">Filtrar por estado</label>
+                    <select id="statusFilter">
+                        <option value="">Todos</option>
+                        <option value="disponible">Disponible</option>
+                        <option value="reservado">Reservado</option>
+                        <option value="vendido">Vendido</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="toolbar-right">
+                <p id="resultsInfo">Mostrando 4 vehículos.</p>
+            </div>
+        </section>
+
+        <section class="vehicle-list" id="vehicleList">
+            <article class="vehicle-item card" data-brand="Toyota" data-model="Corolla" data-status="disponible">
+                <div class="vehicle-thumb"></div>
+
+                <div class="vehicle-info">
+                    <div class="vehicle-title-row">
+                        <h2>Toyota Corolla 2020</h2>
+                        <span class="badge badge-success">Disponible</span>
+                    </div>
+
+                    <p class="vehicle-meta">Automático · Gasolina · 52,000 km</p>
+                    <p class="vehicle-price">$18,900</p>
+                    <p class="vehicle-description">
+                        Vehículo en excelente estado, mantenimiento al día y listo para traspaso.
+                    </p>
+                </div>
+
+                <div class="vehicle-actions">
+                    <a href="./vehicle.edit.html" class="btn btn-secondary">Editar</a>
+                    <button type="button" class="btn btn-primary status-btn" data-next-status="vendido">Marcar vendido</button>
+                    <button type="button" class="btn btn-danger delete-btn">Eliminar</button>
+                </div>
+            </article>
+
+            <article class="vehicle-item card" data-brand="Hyundai" data-model="Tucson" data-status="reservado">
+                <div class="vehicle-thumb"></div>
+
+                <div class="vehicle-info">
+                    <div class="vehicle-title-row">
+                        <h2>Hyundai Tucson 2019</h2>
+                        <span class="badge badge-warning">Reservado</span>
+                    </div>
+
+                    <p class="vehicle-meta">Automático · Diesel · 73,000 km</p>
+                    <p class="vehicle-price">$21,500</p>
+                    <p class="vehicle-description">
+                        SUV cómoda y espaciosa, excelente para uso familiar.
+                    </p>
+                </div>
+
+                <div class="vehicle-actions">
+                    <a href="./vehicle.edit.html" class="btn btn-secondary">Editar</a>
+                    <button type="button" class="btn btn-primary status-btn" data-next-status="disponible">Marcar disponible</button>
+                    <button type="button" class="btn btn-danger delete-btn">Eliminar</button>
+                </div>
+            </article>
+
+            <article class="vehicle-item card" data-brand="Honda" data-model="Civic" data-status="disponible">
+                <div class="vehicle-thumb"></div>
+
+                <div class="vehicle-info">
+                    <div class="vehicle-title-row">
+                        <h2>Honda Civic 2021</h2>
+                        <span class="badge badge-success">Disponible</span>
+                    </div>
+
+                    <p class="vehicle-meta">Manual · Gasolina · 39,000 km</p>
+                    <p class="vehicle-price">$22,300</p>
+                    <p class="vehicle-description">
+                        Excelente rendimiento y diseño deportivo.
+                    </p>
+                </div>
+
+                <div class="vehicle-actions">
+                    <a href="./vehicle.edit.html" class="btn btn-secondary">Editar</a>
+                    <button type="button" class="btn btn-primary status-btn" data-next-status="vendido">Marcar vendido</button>
+                    <button type="button" class="btn btn-danger delete-btn">Eliminar</button>
+                </div>
+            </article>
+
+            <article class="vehicle-item card" data-brand="Honda" data-model="CR-V" data-status="vendido">
+                <div class="vehicle-thumb"></div>
+
+                <div class="vehicle-info">
+                    <div class="vehicle-title-row">
+                        <h2>Honda CR-V 2017</h2>
+                        <span class="badge badge-danger">Vendido</span>
+                    </div>
+
+                    <p class="vehicle-meta">Automático · Gasolina · 92,000 km</p>
+                    <p class="vehicle-price">$19,800</p>
+                    <p class="vehicle-description">
+                        Vehículo ya vendido, publicación mantenida como referencia.
+                    </p>
+                </div>
+
+                <div class="vehicle-actions">
+                    <a href="./vehicle.edit.html" class="btn btn-secondary">Editar</a>
+                    <button type="button" class="btn btn-primary status-btn" data-next-status="disponible">Marcar disponible</button>
+                    <button type="button" class="btn btn-danger delete-btn">Eliminar</button>
+                </div>
+            </article>
+        </section>
+
+        <section class="empty-state card hidden" id="emptyState">
+            <h3>No se encontraron vehículos</h3>
+            <p>Prueba con otro término o cambia el filtro de estado.</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>TicoAutos © 2026 - Gestión de vehículos</p>
+        </div>
+    </footer>
+
+    <script type="module" src="../../js/dashboard/vehicle.my.js"></script>
+</body>
+</html>

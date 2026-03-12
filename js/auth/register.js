@@ -1,37 +1,133 @@
-import { apiFetch } from "../core/http.js";
+document.addEventListener("DOMContentLoaded", () => {
+    const registerForm = document.getElementById("registerForm");
 
-function setMsg(text, type = "ok") {
-    const box = document.getElementById("msg");
-    if (!box) return;
-    box.className = type;
-    box.textContent = text;
-}
+    const nameInput = document.getElementById("name");
+    const lastNameInput = document.getElementById("lastName");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
 
-function isEmailValid(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+    const togglePasswordBtn = document.getElementById("togglePassword");
+    const toggleConfirmPasswordBtn = document.getElementById("toggleConfirmPassword");
 
-const form = document.getElementById("registerForm");
+    const formMessage = document.getElementById("formMessage");
 
-form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    const nameError = document.getElementById("nameError");
+    const lastNameError = document.getElementById("lastNameError");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+    const confirmPasswordError = document.getElementById("confirmPasswordError");
 
-    const name = document.getElementById("name").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
+    function showMessage(message, type) {
+        formMessage.textContent = message;
+        formMessage.classList.remove("hidden", "success", "error");
+        formMessage.classList.add(type);
+    }
 
-    if (!name || !lastName || !email || !password) return setMsg("Completa todos los campos.", "err");
-    if (!isEmailValid(email)) return setMsg("Email inválido.", "err");
-    if (password.length < 6) return setMsg("La contraseña debe tener mínimo 6 caracteres.", "err");
+    function clearMessage() {
+        formMessage.textContent = "";
+        formMessage.classList.add("hidden");
+        formMessage.classList.remove("success", "error");
+    }
 
-    const { res, data } = await apiFetch("/auth/register", {
-        method: "POST",
-        body: JSON.stringify({ name, lastName, email, password }),
+    function clearErrors() {
+        nameError.textContent = "";
+        lastNameError.textContent = "";
+        emailError.textContent = "";
+        passwordError.textContent = "";
+        confirmPasswordError.textContent = "";
+        clearMessage();
+    }
+
+    function validateEmail(email) {
+        return /\S+@\S+\.\S+/.test(email);
+    }
+
+    function validateForm() {
+        clearErrors();
+
+        const name = nameInput.value.trim();
+        const lastName = lastNameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+        const confirmPassword = confirmPasswordInput.value.trim();
+
+        let isValid = true;
+
+        if (!name) {
+            nameError.textContent = "El nombre es obligatorio.";
+            isValid = false;
+        }
+
+        if (!lastName) {
+            lastNameError.textContent = "El apellido es obligatorio.";
+            isValid = false;
+        }
+
+        if (!email) {
+            emailError.textContent = "El correo es obligatorio.";
+            isValid = false;
+        } else if (!validateEmail(email)) {
+            emailError.textContent = "Ingresa un correo válido.";
+            isValid = false;
+        }
+
+        if (!password) {
+            passwordError.textContent = "La contraseña es obligatoria.";
+            isValid = false;
+        } else if (password.length < 6) {
+            passwordError.textContent = "La contraseña debe tener al menos 6 caracteres.";
+            isValid = false;
+        }
+
+        if (!confirmPassword) {
+            confirmPasswordError.textContent = "Debes confirmar la contraseña.";
+            isValid = false;
+        } else if (password !== confirmPassword) {
+            confirmPasswordError.textContent = "Las contraseñas no coinciden.";
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    function togglePasswordVisibility(input, button) {
+        const isPassword = input.type === "password";
+        input.type = isPassword ? "text" : "password";
+        button.textContent = isPassword ? "Ocultar" : "Ver";
+    }
+
+    togglePasswordBtn.addEventListener("click", () => {
+        togglePasswordVisibility(passwordInput, togglePasswordBtn);
     });
 
-    if (!res.ok) return setMsg(data.message || "Error registrando usuario.", "err");
+    toggleConfirmPasswordBtn.addEventListener("click", () => {
+        togglePasswordVisibility(confirmPasswordInput, toggleConfirmPasswordBtn);
+    });
 
-    setMsg("Registro exitoso. Redirigiendo a login...", "ok");
-    setTimeout(() => (window.location.href = "./login.html"), 700);
+    registerForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
+
+        const name = nameInput.value.trim();
+        const lastName = lastNameInput.value.trim();
+        const email = emailInput.value.trim();
+
+        try {
+            clearMessage();
+
+            // Simulación visual mientras conectas backend
+            showMessage(`Cuenta creada correctamente para ${name} ${lastName}.`, "success");
+
+            setTimeout(() => {
+                window.location.href = "./login.html";
+            }, 1300);
+        } catch (error) {
+            console.error("Error en registro:", error);
+            showMessage("Ocurrió un error al registrar la cuenta.", "error");
+        }
+    });
 });

@@ -1,0 +1,144 @@
+.vehicle-my-page {
+    padding: 36px 0 20px;
+}
+
+.page-top {
+    padding: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+    background:
+        radial-gradient(circle at top right, rgba(34, 197, 94, 0.18), transparent 25%),
+        rgba(30, 41, 59, 0.95);
+}
+
+.page-tag {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(34, 197, 94, 0.12);
+    color: #86efac;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.page-top h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.page-top p {
+    color: var(--text-soft);
+    line-height: 1.7;
+    max-width: 60ch;
+}
+
+.toolbar {
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+}
+
+.toolbar-left {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: 16px;
+    flex: 1;
+    min-width: 280px;
+}
+
+.toolbar-right p {
+    color: var(--text-soft);
+    font-weight: 600;
+}
+
+.vehicle-list {
+    display: grid;
+    gap: 18px;
+}
+
+.vehicle-item {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 180px 1fr auto;
+    gap: 18px;
+    align-items: center;
+}
+
+.vehicle-thumb {
+    height: 130px;
+    border-radius: 16px;
+    background:
+        radial-gradient(circle at top right, rgba(34, 197, 94, 0.15), transparent 25%),
+        linear-gradient(135deg, #475569, #1e293b);
+}
+
+.vehicle-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.vehicle-meta {
+    color: var(--text-soft);
+    margin-bottom: 8px;
+}
+
+.vehicle-price {
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.vehicle-description {
+    color: var(--text-soft);
+    line-height: 1.6;
+}
+
+.vehicle-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 160px;
+}
+
+.empty-state {
+    padding: 28px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.empty-state p {
+    color: var(--text-soft);
+    margin-top: 8px;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 980px) {
+
+    .toolbar-left,
+    .vehicle-item {
+        grid-template-columns: 1fr;
+    }
+
+    .vehicle-actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+        min-width: 100%;
+    }
+}

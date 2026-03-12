@@ -1,13 +1,11 @@
-const KEY = "token";
-
-export function saveToken(token) {
-    sessionStorage.setItem(KEY, token);
+function saveToken(token) {
+    sessionStorage.setItem("token", token);
 }
 
-export function getToken() {
-    return sessionStorage.getItem(KEY);
+function getToken() {
+    return sessionStorage.getItem("token");
 }
 
-export function clearToken() {
-    sessionStorage.removeItem(KEY);
+function removeToken() {
+    sessionStorage.removeItem("token");
 }

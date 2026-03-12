@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicoAutos | Dashboard</title>
+
+    <link rel="stylesheet" href="../../css/base/global.css">
+    <link rel="stylesheet" href="../../css/dashboard/dashboard.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container navbar">
+            <a href="../public/home.html" class="brand">TicoAutos</a>
+
+            <nav class="nav-links">
+                <a href="./dashboard.html" class="active">Dashboard</a>
+                <a href="./vehicle.my.html">Mis vehículos</a>
+                <a href="./vehicle.create.html">Publicar</a>
+                <a href="./inbox.list.html">Inbox</a>
+                <a href="../auth/login.html" id="logoutLink">Cerrar sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container dashboard-page">
+        <section class="dashboard-hero card">
+            <div>
+                <span class="hero-tag">Panel principal</span>
+                <h1>Bienvenido, <span id="userName">Usuario</span></h1>
+                <p>
+                    Desde aquí puedes administrar tus vehículos, revisar el estado
+                    de tus publicaciones y responder consultas de compradores.
+                </p>
+            </div>
+
+            <div class="hero-actions">
+                <a href="./vehicle.create.html" class="btn btn-primary">Publicar vehículo</a>
+                <a href="./vehicle.my.html" class="btn btn-secondary">Ver mis vehículos</a>
+            </div>
+        </section>
+
+        <section class="stats-grid">
+            <article class="card stat-card">
+                <span>Vehículos publicados</span>
+                <strong id="publishedCount">6</strong>
+                <p>Total de publicaciones registradas.</p>
+            </article>
+
+            <article class="card stat-card">
+                <span>Disponibles</span>
+                <strong id="availableCount">4</strong>
+                <p>Vehículos listos para recibir consultas.</p>
+            </article>
+
+            <article class="card stat-card">
+                <span>Vendidos</span>
+                <strong id="soldCount">2</strong>
+                <p>Publicaciones finalizadas con éxito.</p>
+            </article>
+
+            <article class="card stat-card">
+                <span>Mensajes nuevos</span>
+                <strong id="messagesCount">5</strong>
+                <p>Consultas pendientes de revisar.</p>
+            </article>
+        </section>
+
+        <section class="dashboard-content">
+            <div class="dashboard-column">
+                <article class="card panel-card">
+                    <div class="panel-head">
+                        <h2>Accesos rápidos</h2>
+                    </div>
+
+                    <div class="quick-links">
+                        <a href="./vehicle.create.html" class="quick-link">
+                            <h3>Publicar vehículo</h3>
+                            <p>Crea una nueva publicación para vender tu auto.</p>
+                        </a>
+
+                        <a href="./vehicle.my.html" class="quick-link">
+                            <h3>Mis vehículos</h3>
+                            <p>Administra tus autos publicados y su estado.</p>
+                        </a>
+
+                        <a href="./inbox.list.html" class="quick-link">
+                            <h3>Inbox</h3>
+                            <p>Revisa consultas y responde a compradores.</p>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="card panel-card">
+                    <div class="panel-head">
+                        <h2>Actividad reciente</h2>
+                    </div>
+
+                    <ul class="activity-list">
+                        <li>
+                            <strong>Nueva consulta recibida</strong>
+                            <p>Recibiste una pregunta sobre Toyota Corolla 2020.</p>
+                        </li>
+                        <li>
+                            <strong>Vehículo actualizado</strong>
+                            <p>Editaste la información de Hyundai Tucson 2019.</p>
+                        </li>
+                        <li>
+                            <strong>Cambio de estado</strong>
+                            <p>Marcaste Honda CR-V 2017 como vendido.</p>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+
+            <div class="dashboard-column">
+                <article class="card panel-card">
+                    <div class="panel-head">
+                        <h2>Resumen general</h2>
+                    </div>
+
+                    <div class="summary-box">
+                        <div class="summary-item">
+                            <span>Vehículo con más visitas</span>
+                            <strong>Toyota Corolla 2020</strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>Última publicación</span>
+                            <strong>Nissan Sentra 2020</strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>Última consulta</span>
+                            <strong>Hace 2 horas</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card panel-card">
+                    <div class="panel-head">
+                        <h2>Estado del perfil</h2>
+                    </div>
+
+                    <div class="profile-status">
+                        <div class="status-row">
+                            <span>Cuenta activa</span>
+                            <span class="badge badge-success">Sí</span>
+                        </div>
+
+                        <div class="status-row">
+                            <span>Vehículos disponibles</span>
+                            <span class="badge badge-success">4</span>
+                        </div>
+
+                        <div class="status-row">
+                            <span>Mensajes pendientes</span>
+                            <span class="badge badge-warning">5</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>TicoAutos © 2026 - Panel de usuario</p>
+        </div>
+    </footer>
+
+    <script src="../../js/core/config.js"></script>
+    <script src="../../js/core/storage.js"></script>
+    <script src="../../js/core/http.js"></script>
+    <script src="../../js/guards/requireAuth.js"></script>
+    <script type="module" src="../../js/dashboard/dashboard.js"></script></body>
+</html> 

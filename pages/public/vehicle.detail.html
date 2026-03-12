@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicoAutos | Detalle del vehículo</title>
+
+    <link rel="stylesheet" href="../../css/base/global.css">
+    <link rel="stylesheet" href="../../css/public/vehicle.detail.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container navbar">
+            <a href="./home.html" class="brand">TicoAutos</a>
+
+            <nav class="nav-links">
+                <a href="./home.html">Inicio</a>
+                <a href="./vehicle.detail.html" class="active">Detalle vehículo</a>
+                <a href="../auth/login.html">Iniciar sesión</a>
+                <a href="../auth/register.html" class="btn btn-primary">Registrarse</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="breadcrumb">
+            <a href="./home.html">Inicio</a>
+            <span>/</span>
+            <span>Detalle del vehículo</span>
+        </section>
+
+        <section class="detail-layout">
+            <div class="detail-main">
+                <div class="gallery card">
+                    <div class="gallery-main" id="mainImage">
+                        <span class="gallery-label">Imagen principal</span>
+                    </div>
+
+                    <div class="gallery-thumbs">
+                        <button class="thumb active" type="button" data-image="1">1</button>
+                        <button class="thumb" type="button" data-image="2">2</button>
+                        <button class="thumb" type="button" data-image="3">3</button>
+                        <button class="thumb" type="button" data-image="4">4</button>
+                    </div>
+                </div>
+
+                <div class="detail-header card">
+                    <div class="title-block">
+                        <span class="badge badge-success">Disponible</span>
+                        <h1 id="vehicleTitle">Toyota Corolla 2020</h1>
+                        <p id="vehicleSubtitle">Automático · Gasolina · 52,000 km</p>
+                    </div>
+
+                    <div class="price-block">
+                        <span>Precio</span>
+                        <strong id="vehiclePrice">$18,900</strong>
+                    </div>
+                </div>
+
+                <div class="description-box card">
+                    <h2>Descripción</h2>
+                    <p id="vehicleDescription">
+                        Vehículo en excelente estado, mantenimiento al día, papeles en regla
+                        y listo para traspaso. Ideal para uso diario, económico y cómodo.
+                    </p>
+                </div>
+
+                <div class="specs-box card">
+                    <h2>Ficha técnica</h2>
+
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <span>Marca</span>
+                            <strong>Toyota</strong>
+                        </div>
+
+                        <div class="spec-item">
+                            <span>Modelo</span>
+                            <strong>Corolla</strong>
+                        </div>
+
+                        <div class="spec-item">
+                            <span>Año</span>
+                            <strong>2020</strong>
+                        </div>
+
+                        <div class="spec-item">
+                            <span>Transmisión</span>
+                            <strong>Automática</strong>
+                        </div>
+
+                        <div class="spec-item">
+                            <span>Combustible</span>
+                            <strong>Gasolina</strong>
+                        </div>
+
+                        <div class="spec-item">
+                            <span>Kilometraje</span>
+                            <strong>52,000 km</strong>
+                        </div>
+
+                        <div class="spec-item">
+                            <span>Color</span>
+                            <strong>Gris</strong>
+                        </div>
+
+                        <div class="spec-item">
+                            <span>Estado</span>
+                            <strong>Disponible</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="detail-side">
+                <div class="owner-card card">
+                    <h2>Datos del propietario</h2>
+
+                    <div class="owner-info">
+                        <div class="owner-avatar">JG</div>
+                        <div>
+                            <h3>Juan Gómez</h3>
+                            <p>San José, Costa Rica</p>
+                        </div>
+                    </div>
+
+                    <div class="owner-meta">
+                        <p>Publicación activa</p>
+                        <p>Respuesta rápida</p>
+                    </div>
+
+                    <div class="owner-actions">
+                        <a href="../auth/login.html" class="btn btn-primary">Preguntar</a>
+                        <button type="button" class="btn btn-secondary" id="shareBtn">Compartir</button>
+                    </div>
+
+                    <p class="share-message hidden" id="shareMessage">
+                        Enlace copiado correctamente.
+                    </p>
+                </div>
+
+                <div class="tips-card card">
+                    <h2>Consejos</h2>
+                    <ul>
+                        <li>Verifica el estado general del vehículo.</li>
+                        <li>Consulta el historial de mantenimiento.</li>
+                        <li>Coordina una revisión antes de comprar.</li>
+                    </ul>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>TicoAutos © 2026 - Plataforma de compra y venta de vehículos</p>
+        </div>
+    </footer>
+
+    <script src="../../js/core/config.js"></script>
+    <script src="../../js/core/storage.js"></script>
+    <script src="../../js/core/http.js"></script>
+    <script src="../../js/app/vehicle.detail.js"></script>
+</body>
+</html>

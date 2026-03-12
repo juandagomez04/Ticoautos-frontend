@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicoAutos | Inicio</title>
+
+    <link rel="stylesheet" href="../../css/base/global.css">
+    <link rel="stylesheet" href="../../css/public/home.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container navbar">
+            <a href="./home.html" class="brand">TicoAutos</a>
+
+            <nav class="nav-links">
+                <a href="./home.html" class="active">Inicio</a>
+                <a href="./vehicle.detail.html">Detalle vehículo</a>
+                <a href="../auth/login.html">Iniciar sesión</a>
+                <a href="../auth/register.html" class="btn btn-primary">Registrarse</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-content card">
+                <div class="hero-text">
+                    <span class="hero-badge">Compra y venta de vehículos</span>
+                    <h1>Encuentra el carro ideal para ti en TicoAutos</h1>
+                    <p>
+                        Explora vehículos publicados por distintos usuarios, filtra por marca,
+                        precio o año, y encuentra la mejor opción para ti.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#vehiclesSection" class="btn btn-primary">Ver vehículos</a>
+                        <a href="../auth/register.html" class="btn btn-secondary">Publicar vehículo</a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-car-card">
+                        <span class="mini-tag">Destacado</span>
+                        <h3>Toyota Corolla 2020</h3>
+                        <p>Automático · Gasolina · 52,000 km</p>
+                        <strong>$18,900</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="filters card">
+            <div class="section-head">
+                <div>
+                    <h2>Buscar vehículos</h2>
+                    <p>Usa los filtros para encontrar el auto que buscas.</p>
+                </div>
+                <button id="clearFiltersBtn" class="btn btn-secondary" type="button">Limpiar filtros</button>
+            </div>
+
+            <form id="filterForm" class="filters-grid">
+                <div class="input-group">
+                    <label for="brand">Marca</label>
+                    <select id="brand">
+                        <option value="">Todas</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Honda">Honda</option>
+                        <option value="Hyundai">Hyundai</option>
+                        <option value="Nissan">Nissan</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="model">Modelo</label>
+                    <input type="text" id="model" placeholder="Ej: Corolla">
+                </div>
+
+                <div class="input-group">
+                    <label for="minYear">Año mínimo</label>
+                    <input type="number" id="minYear" placeholder="2018">
+                </div>
+
+                <div class="input-group">
+                    <label for="maxPrice">Precio máximo</label>
+                    <input type="number" id="maxPrice" placeholder="20000">
+                </div>
+            </form>
+        </section>
+
+        <section class="vehicles-section" id="vehiclesSection">
+            <div class="section-head">
+                <div>
+                    <h2>Vehículos disponibles</h2>
+                    <p id="resultsText">Mostrando 6 vehículos disponibles.</p>
+                </div>
+            </div>
+
+            <div class="vehicle-grid" id="vehicleGrid">
+                <article class="vehicle-card card" data-brand="Toyota" data-model="Corolla" data-year="2020" data-price="18900">
+                    <div class="vehicle-image"></div>
+                    <div class="vehicle-body">
+                        <span class="badge badge-success">Disponible</span>
+                        <h3>Toyota Corolla 2020</h3>
+                        <p>Automático · Gasolina · 52,000 km</p>
+                        <div class="vehicle-footer">
+                            <strong>$18,900</strong>
+                            <a href="./vehicle.detail.html" class="btn btn-primary">Ver detalle</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="vehicle-card card" data-brand="Honda" data-model="Civic" data-year="2021" data-price="22300">
+                    <div class="vehicle-image"></div>
+                    <div class="vehicle-body">
+                        <span class="badge badge-success">Disponible</span>
+                        <h3>Honda Civic 2021</h3>
+                        <p>Manual · Gasolina · 39,000 km</p>
+                        <div class="vehicle-footer">
+                            <strong>$22,300</strong>
+                            <a href="./vehicle.detail.html" class="btn btn-primary">Ver detalle</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="vehicle-card card" data-brand="Hyundai" data-model="Tucson" data-year="2019" data-price="21500">
+                    <div class="vehicle-image"></div>
+                    <div class="vehicle-body">
+                        <span class="badge badge-warning">Reservado</span>
+                        <h3>Hyundai Tucson 2019</h3>
+                        <p>Automático · Diesel · 73,000 km</p>
+                        <div class="vehicle-footer">
+                            <strong>$21,500</strong>
+                            <a href="./vehicle.detail.html" class="btn btn-primary">Ver detalle</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="vehicle-card card" data-brand="Toyota" data-model="Yaris" data-year="2018" data-price="14500">
+                    <div class="vehicle-image"></div>
+                    <div class="vehicle-body">
+                        <span class="badge badge-success">Disponible</span>
+                        <h3>Toyota Yaris 2018</h3>
+                        <p>Manual · Gasolina · 81,000 km</p>
+                        <div class="vehicle-footer">
+                            <strong>$14,500</strong>
+                            <a href="./vehicle.detail.html" class="btn btn-primary">Ver detalle</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="vehicle-card card" data-brand="Nissan" data-model="Sentra" data-year="2020" data-price="17600">
+                    <div class="vehicle-image"></div>
+                    <div class="vehicle-body">
+                        <span class="badge badge-success">Disponible</span>
+                        <h3>Nissan Sentra 2020</h3>
+                        <p>Automático · Gasolina · 48,000 km</p>
+                        <div class="vehicle-footer">
+                            <strong>$17,600</strong>
+                            <a href="./vehicle.detail.html" class="btn btn-primary">Ver detalle</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="vehicle-card card" data-brand="Honda" data-model="CR-V" data-year="2017" data-price="19800">
+                    <div class="vehicle-image"></div>
+                    <div class="vehicle-body">
+                        <span class="badge badge-danger">Vendido</span>
+                        <h3>Honda CR-V 2017</h3>
+                        <p>Automático · Gasolina · 92,000 km</p>
+                        <div class="vehicle-footer">
+                            <strong>$19,800</strong>
+                            <a href="./vehicle.detail.html" class="btn btn-primary">Ver detalle</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="empty-state card hidden" id="emptyState">
+                <h3>No se encontraron vehículos</h3>
+                <p>Prueba cambiando los filtros para ver más resultados.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>TicoAutos © 2026 - Plataforma de compra y venta de vehículos</p>
+        </div>
+    </footer>
+
+    <script src="../../js/core/config.js"></script>
+    <script src="../../js/core/storage.js"></script>
+    <script src="../../js/core/http.js"></script>
+    <script src="../../js/app/home.js"></script>
+</body>
+</html>

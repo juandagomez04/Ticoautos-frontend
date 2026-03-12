@@ -1,40 +1,104 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Registro - TicoAutos</title>
-    <link rel="stylesheet" href="../../css/base/reset.css" />
-    <link rel="stylesheet" href="../../css/base/main.css" />
-    <link rel="stylesheet" href="../../css/auth/auth.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicoAutos | Registro</title>
+
+    <link rel="stylesheet" href="../../css/base/global.css">
+    <link rel="stylesheet" href="../../css/auth/auth.css">
 </head>
-
 <body>
-    <main class="card">
-        <h1>Crear cuenta</h1>
+    <header class="topbar">
+        <div class="container navbar">
+            <a href="../public/home.html" class="brand">TicoAutos</a>
 
-        <form id="registerForm">
-            <label>Nombre</label>
-            <input id="name" placeholder="Nombre" required />
+            <nav class="nav-links">
+                <a href="../public/home.html">Inicio</a>
+                <a href="./login.html">Iniciar sesión</a>
+                <a href="./register.html" class="active btn btn-primary">Registrarse</a>
+            </nav>
+        </div>
+    </header>
 
-            <label>Apellido</label>
-            <input id="lastName" placeholder="Apellido" required />
+    <main class="auth-page container">
+        <section class="auth-wrapper">
+            <div class="auth-left card">
+                <span class="auth-tag">Nueva cuenta</span>
+                <h1>Crea tu cuenta en TicoAutos</h1>
+                <p>
+                    Regístrate para publicar vehículos, administrar tus anuncios
+                    y responder consultas de posibles compradores.
+                </p>
 
-            <label>Email</label>
-            <input id="email" type="email" placeholder="Email" required />
+                <ul class="auth-benefits">
+                    <li>Publica tus vehículos fácilmente</li>
+                    <li>Administra tus anuncios desde el dashboard</li>
+                    <li>Recibe preguntas de compradores interesados</li>
+                </ul>
+            </div>
 
-            <label>Contraseña</label>
-            <input id="password" type="password" minlength="6" placeholder="Contraseña" required />
+            <div class="auth-right card">
+                <div class="auth-form-header">
+                    <h2>Crear cuenta</h2>
+                    <p>Completa los datos para registrarte</p>
+                </div>
 
-            <button type="submit">Registrarme</button>
-        </form>
+                <form id="registerForm" class="auth-form" novalidate>
+                    <div class="input-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" placeholder="Juan">
+                        <small class="field-error" id="nameError"></small>
+                    </div>
 
-        <p id="msg"></p>
-        <p>¿Ya tienes cuenta? <a href="./login.html">Inicia sesión</a></p>
+                    <div class="input-group">
+                        <label for="lastName">Apellido</label>
+                        <input type="text" id="lastName" placeholder="Gómez">
+                        <small class="field-error" id="lastNameError"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" placeholder="correo@ejemplo.com">
+                        <small class="field-error" id="emailError"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Contraseña</label>
+                        <div class="password-box">
+                            <input type="password" id="password" placeholder="********">
+                            <button type="button" class="toggle-password" id="togglePassword">Ver</button>
+                        </div>
+                        <small class="field-error" id="passwordError"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="confirmPassword">Confirmar contraseña</label>
+                        <div class="password-box">
+                            <input type="password" id="confirmPassword" placeholder="********">
+                            <button type="button" class="toggle-password" id="toggleConfirmPassword">Ver</button>
+                        </div>
+                        <small class="field-error" id="confirmPasswordError"></small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary auth-submit">Registrarme</button>
+
+                    <div class="form-message hidden" id="formMessage"></div>
+                </form>
+
+                <div class="auth-footer">
+                    <p>
+                        ¿Ya tienes cuenta?
+                        <a href="./login.html">Inicia sesión aquí</a>
+                    </p>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <script type="module" src="../../js/auth/register.js"></script>
+    <script src="../../js/core/config.js"></script>
+    <script src="../../js/core/storage.js"></script>
+    <script src="../../js/core/http.js"></script>
+    <script src="../../js/auth/register.js"></script>
 </body>
-
 </html>
