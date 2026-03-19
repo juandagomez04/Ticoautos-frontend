@@ -1,3 +1,5 @@
+import { API } from "../core/config.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     const registerForm = document.getElementById("registerForm");
 
@@ -108,26 +110,41 @@ document.addEventListener("DOMContentLoaded", () => {
     registerForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        if (!validateForm()) {
-            return;
-        }
+        if (!validateForm()) return;
 
-        const name = nameInput.value.trim();
-        const lastName = lastNameInput.value.trim();
-        const email = emailInput.value.trim();
+        const payload = {
+            name: nameInput.value.trim(),
+            lastName: lastNameInput.value.trim(),
+            email: emailInput.value.trim(),
+            password: passwordInput.value.trim()
+        };
 
         try {
             clearMessage();
 
-            // Simulación visual mientras conectas backend
-            showMessage(`Cuenta creada correctamente para ${name} ${lastName}.`, "success");
+            const res = await fetch(`${API}/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json().catch(() => ({}));
+
+            if (!res.ok) {
+                showMessage(data.message || "No se pudo registrar la cuenta.", "error");
+                return;
+            }
+
+            showMessage("Cuenta creada correctamente. Ahora puedes iniciar sesión.", "success");
 
             setTimeout(() => {
                 window.location.href = "./login.html";
-            }, 1300);
+            }, 1200);
         } catch (error) {
             console.error("Error en registro:", error);
-            showMessage("Ocurrió un error al registrar la cuenta.", "error");
+            showMessage("Error de conexión con el servidor.", "error");
         }
     });
 });
