@@ -16,7 +16,7 @@
             <a href="../public/home.html" class="brand">
                 <img src="../../img/logo.png" alt="TicoAutos logo" class="logo">
             </a>
-            
+
             <nav class="nav-links">
                 <a href="./home.html" class="active">Inicio</a>
                 <a href="./vehicle.detail.html">Detalle vehículo</a>
@@ -88,6 +88,16 @@
                 <div class="input-group">
                     <label for="maxPrice">Precio máximo</label>
                     <input type="number" id="maxPrice" placeholder="20000">
+                </div>
+
+                <div class="input-group">
+                    <label for="status">Estado</label>
+                    <select id="status">
+                        <option value="">Todos</option>
+                        <option value="disponible">Disponible</option>
+                        <option value="reservado">Reservado</option>
+                        <option value="vendido">Vendido</option>
+                    </select>
                 </div>
             </form>
         </section>
