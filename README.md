@@ -1,92 +1,120 @@
-TicoAutos Frontend
+# TicoAutos — Frontend
+🚗 Cliente web desacoplado para la plataforma de compra y venta de vehículos TicoAutos.
 
-Frontend del proyecto TicoAutos desarrollado con HTML, CSS y JavaScript.
+Desarrollado como proyecto académico para la carrera de Ingeniería del Software en la Universidad Técnica Nacional (UTN), Costa Rica.
 
-Este frontend se conecta con un backend construido con Node.js, Express y MongoDB para manejar la autenticación de usuarios utilizando JWT (JSON Web Token).
+---
 
---------------------------------------------------
+## 📌 Descripción
 
-FUNCIONALIDADES ACTUALES
+Este repositorio contiene el frontend de TicoAutos, desarrollado con HTML, CSS y JavaScript puro (ES Modules), sin frameworks. Se conecta al backend mediante fetch a la API REST, utilizando JWT para autenticación y localStorage para persistencia de sesión.
 
-- Registro de usuario
-- Inicio de sesión
-- Almacenamiento del token JWT
-- Página privada protegida
-- Cierre de sesión
+---
 
---------------------------------------------------
+## ⚙️ Tecnologías
 
-ESTRUCTURA DEL PROYECTO
+- HTML5 + CSS3
+- JavaScript (ES Modules)
+- Live Server (VS Code)
+- localStorage para manejo del token JWT
 
-ticoautos-frontend
+---
 
-css
-  base
-  auth
-  app
+## 📂 Estructura del proyecto
 
-js
-  core
-  guards
-  auth
-  app
+```
+ticoautos-frontend/
+ ├── pages/
+ │   ├── auth/
+ │   │   ├── login.html
+ │   │   └── register.html
+ │   ├── dashboard/
+ │   │   ├── dashboard.html
+ │   │   ├── vehicle.my.html       mis vehículos
+ │   │   ├── vehicle.create.html   publicar vehículo
+ │   │   ├── vehicle.edit.html     editar vehículo
+ │   │   ├── inbox.list.html       lista de conversaciones
+ │   │   └── inbox.conversation.html  detalle de conversación
+ │   └── public/
+ │       ├── home.html             página principal con búsqueda
+ │       └── vehicle.detail.html   detalle de vehículo
+ ├── js/
+ │   ├── app/
+ │   │   ├── home.js               carga vehículos con filtros y paginación
+ │   │   └── vehicle.detail.js     detalle + reserva + mensajes
+ │   ├── auth/
+ │   │   ├── login.js
+ │   │   ├── register.js
+ │   │   └── logout.js
+ │   ├── core/
+ │   │   ├── config.js             URL base de la API
+ │   │   ├── http.js               wrapper de fetch con JWT
+ │   │   └── storage.js            manejo del token en localStorage
+ │   ├── dashboard/
+ │   │   ├── dashboard.js
+ │   │   ├── vehicle.my.js         listado de mis vehículos
+ │   │   ├── vehicle.create.js     formulario de creación
+ │   │   ├── vehicle.edit.js       formulario de edición
+ │   │   ├── inbox.list.js         lista de conversaciones
+ │   │   └── inbox.conversation.js historial de mensajes
+ │   └── guards/
+ │       └── requireAuth.js        protege páginas privadas
+ ├── css/
+ │   ├── base/       reset.css · global.css · main.css
+ │   ├── auth/       auth.css
+ │   ├── dashboard/  dashboard.css · vehicle.my.css · vehicle.form.css · inbox.css
+ │   └── public/     home.css · vehicle.detail.css
+ └── img/
+     └── logo.png
+```
 
-pages
-  auth
-    login.html
-    register.html
-  app
-    home.html
+---
 
-index.html
+## 🚀 Ejecución
 
---------------------------------------------------
+1. Asegurarse de que el backend esté corriendo en `http://localhost:3001`.
+2. Abrir la carpeta con **Live Server** en VS Code.
+3. Navegar a `pages/public/home.html`.
 
-REQUISITOS
+> ⚠️ El frontend usa ES Modules (`type="module"`), por lo que debe ejecutarse desde un servidor HTTP (Live Server), no abriendo el archivo directamente con `file://`.
 
-El backend debe estar corriendo en:
+---
 
-http://localhost:3001
+## 🔁 Flujo de autenticación
 
---------------------------------------------------
+1. El usuario se registra o inicia sesión.
+2. El backend retorna un JWT que se guarda en `localStorage`.
+3. `core/http.js` adjunta el token en cada petición protegida.
+4. `guards/requireAuth.js` verifica el token antes de cargar páginas privadas.
+5. Al cerrar sesión se limpia el token de `localStorage`.
 
-CÓMO EJECUTAR EL PROYECTO
+---
 
-1. Levantar el backend
+## 📄 Páginas principales
 
-npm start
+| Página | Acceso | Descripción |
+|--------|--------|-------------|
+| home.html | Público | Búsqueda y filtrado de vehículos con paginación |
+| vehicle.detail.html | Público | Detalle del vehículo, reserva y mensajes |
+| login.html | Público | Inicio de sesión |
+| register.html | Público | Registro de usuario |
+| dashboard.html | Privado | Panel principal del usuario |
+| vehicle.my.html | Privado | Gestión de mis vehículos |
+| vehicle.create.html | Privado | Publicar nuevo vehículo |
+| vehicle.edit.html | Privado | Editar vehículo existente |
+| inbox.list.html | Privado | Lista de conversaciones |
+| inbox.conversation.html | Privado | Historial de mensajes |
 
-2. Abrir el frontend
+---
 
-Abrir el archivo:
+## 🔗 Repositorio del backend
 
-index.html
+`https://github.com/juandagomez04/Ticoautos-backend`
 
-o usar Live Server en VS Code.
+---
 
---------------------------------------------------
+## 👨‍💻 Autor
 
-FLUJO DE AUTENTICACIÓN
-
-1. El usuario se registra usando:
-
-POST /auth/register
-
-2. El usuario inicia sesión usando:
-
-POST /auth/token
-
-3. El token recibido se guarda en:
-
-sessionStorage
-
-4. Las páginas privadas utilizan:
-
-GET /auth/me
-
-enviando el token en el header Authorization.
-
---------------------------------------------------
-
-Autor Juan Daniel Gómez Cubillo
-Proyecto académico – TicoAutos
+**Juan Daniel Gómez Cubillo**
+Ingeniería del Software — UTN Costa Rica
+Curso: Programación en Ambiente Web II (ISW-711)
