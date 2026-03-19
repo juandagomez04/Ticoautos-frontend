@@ -1,5 +1,6 @@
 import { requireAuth } from "../guards/requireAuth.js";
 import { clearToken } from "../core/storage.js";
+import { apiFetch } from "../core/http.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const ok = await requireAuth();
@@ -9,104 +10,120 @@ document.addEventListener("DOMContentLoaded", async () => {
     const searchVehicle = document.getElementById("searchVehicle");
     const statusFilter = document.getElementById("statusFilter");
     const vehicleList = document.getElementById("vehicleList");
-    const vehicleItems = Array.from(vehicleList.querySelectorAll(".vehicle-item"));
     const resultsInfo = document.getElementById("resultsInfo");
     const emptyState = document.getElementById("emptyState");
 
-    function normalizeText(value) {
-        return value.toLowerCase().trim();
-    }
+    let allVehicles = [];
 
-    function updateResults(count) {
-        resultsInfo.textContent = `Mostrando ${count} vehículo${count === 1 ? "" : "s"}.`;
+    // ── Cargar vehículos del usuario desde el backend ──
+    async function loadMyVehicles() {
+        vehicleList.innerHTML = "<p style='color:var(--text-soft);padding:20px'>Cargando...</p>";
 
-        if (count === 0) {
-            emptyState.classList.remove("hidden");
-        } else {
-            emptyState.classList.add("hidden");
-        }
-    }
+        const { res, data } = await apiFetch("/api/vehicles/my");
 
-    function applyFilters() {
-        const searchValue = normalizeText(searchVehicle.value);
-        const statusValue = normalizeText(statusFilter.value);
-
-        let visibleCount = 0;
-
-        vehicleItems.forEach((item) => {
-            const brand = normalizeText(item.dataset.brand || "");
-            const model = normalizeText(item.dataset.model || "");
-            const status = normalizeText(item.dataset.status || "");
-
-            const matchesSearch =
-                !searchValue ||
-                brand.includes(searchValue) ||
-                model.includes(searchValue);
-
-            const matchesStatus = !statusValue || status === statusValue;
-
-            const shouldShow = matchesSearch && matchesStatus;
-
-            item.style.display = shouldShow ? "grid" : "none";
-
-            if (shouldShow) visibleCount++;
-        });
-
-        updateResults(visibleCount);
-    }
-
-    function updateStatus(item, nextStatus) {
-        const badge = item.querySelector(".badge");
-        const button = item.querySelector(".status-btn");
-
-        item.dataset.status = nextStatus;
-
-        badge.classList.remove("badge-success", "badge-warning", "badge-danger");
-
-        if (nextStatus === "disponible") {
-            badge.textContent = "Disponible";
-            badge.classList.add("badge-success");
-            button.textContent = "Marcar vendido";
-            button.dataset.nextStatus = "vendido";
-        } else if (nextStatus === "reservado") {
-            badge.textContent = "Reservado";
-            badge.classList.add("badge-warning");
-            button.textContent = "Marcar disponible";
-            button.dataset.nextStatus = "disponible";
-        } else if (nextStatus === "vendido") {
-            badge.textContent = "Vendido";
-            badge.classList.add("badge-danger");
-            button.textContent = "Marcar disponible";
-            button.dataset.nextStatus = "disponible";
+        if (!res.ok) {
+            vehicleList.innerHTML = "<p style='color:red;padding:20px'>Error al cargar vehículos.</p>";
+            return;
         }
 
+        allVehicles = data;
         applyFilters();
     }
 
-    vehicleItems.forEach((item) => {
-        const statusBtn = item.querySelector(".status-btn");
-        const deleteBtn = item.querySelector(".delete-btn");
+    // ── Renderizar tarjetas con la estructura exacta del HTML/CSS ──
+    function renderList(vehicles) {
+        vehicleList.innerHTML = "";
 
-        statusBtn.addEventListener("click", () => {
-            const nextStatus = statusBtn.dataset.nextStatus;
-            updateStatus(item, nextStatus);
+        if (vehicles.length === 0) {
+            emptyState.classList.remove("hidden");
+            resultsInfo.textContent = "Mostrando 0 vehículos.";
+            return;
+        }
+
+        emptyState.classList.add("hidden");
+        resultsInfo.textContent = `Mostrando ${vehicles.length} vehículo${vehicles.length === 1 ? "" : "s"}.`;
+
+        vehicles.forEach((v) => {
+            const badgeClass =
+                v.status === "disponible" ? "badge-success" :
+                    v.status === "reservado" ? "badge-warning" : "badge-danger";
+            const badgeLabel = v.status.charAt(0).toUpperCase() + v.status.slice(1);
+            const nextStatus = v.status === "disponible" ? "vendido" : "disponible";
+            const nextLabel = v.status === "disponible" ? "Marcar vendido" : "Marcar disponible";
+
+            const thumbStyle = v.images && v.images.length > 0
+                ? `background-image: url('${v.images[0]}'); background-size: cover; background-position: center;`
+                : "";
+
+            const article = document.createElement("article");
+            article.className = "vehicle-item card";
+            article.dataset.brand = v.brand;
+            article.dataset.model = v.model;
+            article.dataset.status = v.status;
+
+            article.innerHTML = `
+        <div class="vehicle-thumb" style="${thumbStyle}"></div>
+
+        <div class="vehicle-info">
+          <div class="vehicle-title-row">
+            <h2>${v.brand} ${v.model} ${v.year}</h2>
+            <span class="badge ${badgeClass}">${badgeLabel}</span>
+          </div>
+          <p class="vehicle-meta">${v.transmission} · ${v.fuel} · ${Number(v.mileage).toLocaleString("en-US")} km</p>
+          <p class="vehicle-price">$${Number(v.price).toLocaleString("en-US")}</p>
+          <p class="vehicle-description">${v.description}</p>
+        </div>
+
+        <div class="vehicle-actions">
+          <a href="./vehicle.edit.html?id=${v._id}" class="btn btn-secondary">Editar</a>
+          <button type="button" class="btn btn-primary status-btn" data-id="${v._id}" data-next="${nextStatus}">${nextLabel}</button>
+          <button type="button" class="btn btn-danger delete-btn" data-id="${v._id}">Eliminar</button>
+        </div>
+      `;
+
+            // Cambiar estado
+            article.querySelector(".status-btn").addEventListener("click", async (e) => {
+                const { res } = await apiFetch(`/api/vehicles/${e.target.dataset.id}/status`, {
+                    method: "PATCH",
+                    body: JSON.stringify({ status: e.target.dataset.next }),
+                });
+                if (res.ok) await loadMyVehicles();
+            });
+
+            // Eliminar
+            article.querySelector(".delete-btn").addEventListener("click", async (e) => {
+                if (!confirm("¿Seguro que querés eliminar este vehículo?")) return;
+                const { res } = await apiFetch(`/api/vehicles/${e.target.dataset.id}`, { method: "DELETE" });
+                if (res.ok) await loadMyVehicles();
+            });
+
+            vehicleList.appendChild(article);
+        });
+    }
+
+    // ── Filtros ──
+    function applyFilters() {
+        const search = searchVehicle.value.toLowerCase().trim();
+        const status = statusFilter.value.toLowerCase().trim();
+
+        const filtered = allVehicles.filter((v) => {
+            const matchSearch = !search || v.brand.toLowerCase().includes(search) || v.model.toLowerCase().includes(search);
+            const matchStatus = !status || v.status === status;
+            return matchSearch && matchStatus;
         });
 
-        deleteBtn.addEventListener("click", () => {
-            item.remove();
-            applyFilters();
-        });
-    });
+        renderList(filtered);
+    }
 
     searchVehicle.addEventListener("input", applyFilters);
     statusFilter.addEventListener("change", applyFilters);
 
-    logoutLink.addEventListener("click", (event) => {
-        event.preventDefault();
+    logoutLink.addEventListener("click", (e) => {
+        e.preventDefault();
         clearToken();
         sessionStorage.removeItem("userName");
         window.location.href = "../auth/login.html";
     });
 
-    applyFilters();
+    await loadMyVehicles();
 });
