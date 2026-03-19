@@ -1,0 +1,183 @@
+.inbox-page,
+.conversation-page {
+    padding: 2rem 0 3rem;
+}
+
+.inbox-hero,
+.inbox-toolbar,
+.inbox-item,
+.conversation-side,
+.conversation-main,
+.empty-state {
+    border-radius: 20px;
+}
+
+.page-tag {
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0f766e;
+    background: #ccfbf1;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+}
+
+.toolbar-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+}
+
+.inbox-list {
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.inbox-item {
+    padding: 1.25rem;
+}
+
+.inbox-item-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.inbox-item-top h3 {
+    margin: 0.5rem 0 0.25rem;
+}
+
+.inbox-item-top p,
+.inbox-item-body p {
+    margin: 0.25rem 0;
+    color: #475569;
+}
+
+.empty-state {
+    margin-top: 1.5rem;
+    text-align: center;
+    padding: 2rem;
+}
+
+.conversation-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 1.5rem;
+}
+
+.conversation-side,
+.conversation-main {
+    padding: 1.5rem;
+}
+
+.conversation-meta {
+    margin: 1.5rem 0;
+    display: grid;
+    gap: 0.85rem;
+}
+
+.meta-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 0.75rem;
+}
+
+.messages-box {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.message-card {
+    padding: 1rem 1.1rem;
+    border-radius: 16px;
+}
+
+.message-role {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.message-question {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+}
+
+.message-answer {
+    background: #ecfdf5;
+    border: 1px solid #86efac;
+}
+
+.message-system {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+}
+
+.answer-form {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.answer-form textarea {
+    width: 100%;
+    min-height: 140px;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    padding: 0.9rem 1rem;
+    resize: vertical;
+    font: inherit;
+}
+
+.answer-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.full-btn {
+    width: 100%;
+    text-align: center;
+}
+
+.form-message {
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+    font-weight: 600;
+}
+
+.form-message.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.form-message.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 900px) {
+    .conversation-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .toolbar-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .inbox-item-top {
+        flex-direction: column;
+    }
+}
