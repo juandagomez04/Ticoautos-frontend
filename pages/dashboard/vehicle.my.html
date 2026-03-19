@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,14 @@
     <link rel="stylesheet" href="../../css/base/global.css">
     <link rel="stylesheet" href="../../css/dashboard/vehicle.my.css">
 </head>
+
 <body>
     <header class="topbar">
         <div class="container navbar">
-            <a href="../public/home.html" class="brand">TicoAutos</a>
-
+            <a href="../public/home.html" class="brand">
+                <img src="../../img/logo.png" alt="TicoAutos logo" class="logo">
+            </a>
+            
             <nav class="nav-links">
                 <a href="./dashboard.html">Dashboard</a>
                 <a href="./vehicle.my.html" class="active">Mis vehículos</a>
@@ -80,8 +84,8 @@
                 </div>
 
                 <div class="vehicle-actions">
-                    <a href="./vehicle.edit.html" class="btn btn-secondary">Editar</a>
-                    <button type="button" class="btn btn-primary status-btn" data-next-status="vendido">Marcar vendido</button>
+                    <a href="./vehicle.edit.html?id=1" class="btn btn-secondary">Editar</a> <button type="button"
+                        class="btn btn-primary status-btn" data-next-status="vendido">Marcar vendido</button>
                     <button type="button" class="btn btn-danger delete-btn">Eliminar</button>
                 </div>
             </article>
@@ -104,7 +108,8 @@
 
                 <div class="vehicle-actions">
                     <a href="./vehicle.edit.html" class="btn btn-secondary">Editar</a>
-                    <button type="button" class="btn btn-primary status-btn" data-next-status="disponible">Marcar disponible</button>
+                    <button type="button" class="btn btn-primary status-btn" data-next-status="disponible">Marcar
+                        disponible</button>
                     <button type="button" class="btn btn-danger delete-btn">Eliminar</button>
                 </div>
             </article>
@@ -127,7 +132,8 @@
 
                 <div class="vehicle-actions">
                     <a href="./vehicle.edit.html" class="btn btn-secondary">Editar</a>
-                    <button type="button" class="btn btn-primary status-btn" data-next-status="vendido">Marcar vendido</button>
+                    <button type="button" class="btn btn-primary status-btn" data-next-status="vendido">Marcar
+                        vendido</button>
                     <button type="button" class="btn btn-danger delete-btn">Eliminar</button>
                 </div>
             </article>
@@ -150,7 +156,8 @@
 
                 <div class="vehicle-actions">
                     <a href="./vehicle.edit.html" class="btn btn-secondary">Editar</a>
-                    <button type="button" class="btn btn-primary status-btn" data-next-status="disponible">Marcar disponible</button>
+                    <button type="button" class="btn btn-primary status-btn" data-next-status="disponible">Marcar
+                        disponible</button>
                     <button type="button" class="btn btn-danger delete-btn">Eliminar</button>
                 </div>
             </article>
@@ -170,4 +177,5 @@
 
     <script type="module" src="../../js/dashboard/vehicle.my.js"></script>
 </body>
+
 </html>
