@@ -1,20 +1,23 @@
 .auth-page {
-    min-height: calc(100vh - 76px);
+    min-height: calc(100vh - 140px);
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 40px 0;
 }
 
 .auth-wrapper {
     width: 100%;
+    max-width: 1400px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 32px;
+    align-items: stretch;
 }
 
 .auth-left,
 .auth-right {
-    padding: 32px;
+    padding: 48px;
 }
 
 .auth-left {
