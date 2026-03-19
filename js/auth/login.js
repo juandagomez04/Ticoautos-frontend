@@ -1,3 +1,6 @@
+import { API } from "../core/config.js";
+import { saveToken } from "../core/storage.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("loginForm");
     const emailInput = document.getElementById("email");
@@ -65,35 +68,40 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        if (!validateForm()) {
-            return;
-        }
+        if (!validateForm()) return;
 
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
+        const payload = {
+            email: emailInput.value.trim(),
+            password: passwordInput.value.trim()
+        };
 
         try {
             clearMessage();
 
-            // Simulación visual del login por ahora
-            // Cuando conectes backend, aquí llamas tu API real
-            if (email === "admin@ticoautos.com" && password === "123456") {
-                saveToken("demo-token-123");
+            const res = await fetch(`${API}/auth/token`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
 
-                // guardar nombre para mostrar en dashboard
-                sessionStorage.setItem("userName", "Juan");
+            const data = await res.json().catch(() => ({}));
 
-                showMessage("Inicio de sesión exitoso. Redirigiendo...", "success");
-
-                setTimeout(() => {
-                    window.location.href = "../dashboard/dashboard.html";
-                }, 1200);
-            } else {
-                showMessage("Credenciales incorrectas.", "error");
+            if (!res.ok) {
+                showMessage(data.message || "Credenciales incorrectas.", "error");
+                return;
             }
+
+            saveToken(data.token);
+            showMessage("Inicio de sesión exitoso. Redirigiendo...", "success");
+
+            setTimeout(() => {
+                window.location.href = "../dashboard/dashboard.html";
+            }, 1000);
         } catch (error) {
             console.error("Error en login:", error);
-            showMessage("Ocurrió un error al iniciar sesión.", "error");
+            showMessage("Error de conexión con el servidor.", "error");
         }
     });
 });
