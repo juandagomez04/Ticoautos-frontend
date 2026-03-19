@@ -1,7 +1,11 @@
 import { requireAuth } from "../guards/requireAuth.js";
 import { clearToken } from "../core/storage.js";
+import { apiFetch } from "../core/http.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
+    const ok = await requireAuth();
+    if (!ok) return;
+
     const logoutLink = document.getElementById("logoutLink");
     const form = document.getElementById("vehicleEditForm");
     const formMessage = document.getElementById("formMessage");
@@ -19,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         color: document.getElementById("color"),
         location: document.getElementById("location"),
         description: document.getElementById("description"),
-        images: document.getElementById("images")
+        images: document.getElementById("images"),
     };
 
     const errors = {
@@ -34,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         color: document.getElementById("colorError"),
         location: document.getElementById("locationError"),
         description: document.getElementById("descriptionError"),
-        images: document.getElementById("imagesError")
+        images: document.getElementById("imagesError"),
     };
 
     const previewTitle = document.getElementById("previewTitle");
@@ -43,56 +47,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     const previewStatus = document.getElementById("previewStatus");
 
     const params = new URLSearchParams(window.location.search);
-    const vehicleId = Number(params.get("id")) || 1;
+    const vehicleId = params.get("id");
+    let imageBase64 = "";
+    let currentImages = [];
 
-    function getVehicles() {
-        const existing = JSON.parse(sessionStorage.getItem("ticoVehicles") || "[]");
-
-        if (existing.length) return existing;
-
-        const mock = [
-            {
-                id: 1,
-                brand: "Toyota",
-                model: "Corolla",
-                year: "2020",
-                price: "18900",
-                status: "disponible",
-                transmission: "automática",
-                fuel: "gasolina",
-                mileage: "52000",
-                color: "Gris",
-                location: "San José, Costa Rica",
-                description: "Vehículo en excelente estado, mantenimiento al día y listo para traspaso.",
-                image: ""
-            },
-            {
-                id: 2,
-                brand: "Hyundai",
-                model: "Tucson",
-                year: "2019",
-                price: "21500",
-                status: "vendido",
-                transmission: "automática",
-                fuel: "diesel",
-                mileage: "73000",
-                color: "Blanco",
-                location: "Heredia, Costa Rica",
-                description: "SUV espacioso, cómodo y con revisión reciente.",
-                image: ""
-            }
-        ];
-
-        sessionStorage.setItem("ticoVehicles", JSON.stringify(mock));
-        return mock;
-    }
-
-    function saveVehicles(data) {
-        sessionStorage.setItem("ticoVehicles", JSON.stringify(data));
+    if (!vehicleId) {
+        showMessage("No se indicó el vehículo a editar.", "error");
+        return;
     }
 
     function clearErrors() {
-        Object.values(errors).forEach(error => error.textContent = "");
+        Object.values(errors).forEach((e) => (e.textContent = ""));
         formMessage.textContent = "";
         formMessage.classList.add("hidden");
         formMessage.classList.remove("success", "error");
@@ -125,63 +90,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         let isValid = true;
         const currentYear = new Date().getFullYear() + 1;
 
-        if (!fields.brand.value.trim()) {
-            errors.brand.textContent = "La marca es obligatoria.";
-            isValid = false;
-        }
-
-        if (!fields.model.value.trim()) {
-            errors.model.textContent = "El modelo es obligatorio.";
-            isValid = false;
-        }
+        if (!fields.brand.value.trim()) { errors.brand.textContent = "La marca es obligatoria."; isValid = false; }
+        if (!fields.model.value.trim()) { errors.model.textContent = "El modelo es obligatorio."; isValid = false; }
 
         const year = Number(fields.year.value);
-        if (!fields.year.value.trim()) {
-            errors.year.textContent = "El año es obligatorio.";
-            isValid = false;
-        } else if (year < 1900 || year > currentYear) {
-            errors.year.textContent = "Ingresa un año válido.";
-            isValid = false;
-        }
+        if (!fields.year.value.trim()) { errors.year.textContent = "El año es obligatorio."; isValid = false; }
+        else if (year < 1900 || year > currentYear) { errors.year.textContent = "Ingresa un año válido."; isValid = false; }
 
         const price = Number(fields.price.value);
-        if (!fields.price.value.trim()) {
-            errors.price.textContent = "El precio es obligatorio.";
-            isValid = false;
-        } else if (price <= 0) {
-            errors.price.textContent = "El precio debe ser mayor a 0.";
-            isValid = false;
-        }
+        if (!fields.price.value.trim()) { errors.price.textContent = "El precio es obligatorio."; isValid = false; }
+        else if (price <= 0) { errors.price.textContent = "El precio debe ser mayor a 0."; isValid = false; }
 
-        if (!fields.status.value.trim()) {
-            errors.status.textContent = "Selecciona un estado.";
-            isValid = false;
-        }
-
-        if (!fields.transmission.value.trim()) {
-            errors.transmission.textContent = "Selecciona una transmisión.";
-            isValid = false;
-        }
-
-        if (!fields.fuel.value.trim()) {
-            errors.fuel.textContent = "Selecciona un combustible.";
-            isValid = false;
-        }
-
-        if (!fields.mileage.value.trim()) {
-            errors.mileage.textContent = "El kilometraje es obligatorio.";
-            isValid = false;
-        }
-
-        if (!fields.color.value.trim()) {
-            errors.color.textContent = "El color es obligatorio.";
-            isValid = false;
-        }
-
-        if (!fields.location.value.trim()) {
-            errors.location.textContent = "La ubicación es obligatoria.";
-            isValid = false;
-        }
+        if (!fields.status.value.trim()) { errors.status.textContent = "Selecciona un estado."; isValid = false; }
+        if (!fields.transmission.value.trim()) { errors.transmission.textContent = "Selecciona una transmisión."; isValid = false; }
+        if (!fields.fuel.value.trim()) { errors.fuel.textContent = "Selecciona un combustible."; isValid = false; }
+        if (!fields.mileage.value.trim()) { errors.mileage.textContent = "El kilometraje es obligatorio."; isValid = false; }
+        if (!fields.color.value.trim()) { errors.color.textContent = "El color es obligatorio."; isValid = false; }
+        if (!fields.location.value.trim()) { errors.location.textContent = "La ubicación es obligatoria."; isValid = false; }
 
         if (!fields.description.value.trim() || fields.description.value.trim().length < 15) {
             errors.description.textContent = "La descripción debe ser más detallada.";
@@ -191,29 +116,30 @@ document.addEventListener("DOMContentLoaded", async () => {
         return isValid;
     }
 
-    function loadVehicle() {
-        const vehicles = getVehicles();
-        const vehicle = vehicles.find(item => item.id === vehicleId);
+    // ── Cargar datos del vehículo desde el backend ──
+    async function loadVehicle() {
+        const { res, data } = await apiFetch(`/api/vehicles/${vehicleId}`);
 
-        if (!vehicle) {
-            showMessage("No se encontró el vehículo a editar.", "error");
+        if (!res.ok) {
+            showMessage("No se pudo cargar el vehículo.", "error");
             return;
         }
 
-        fields.brand.value = vehicle.brand;
-        fields.model.value = vehicle.model;
-        fields.year.value = vehicle.year;
-        fields.price.value = vehicle.price;
-        fields.status.value = vehicle.status;
-        fields.transmission.value = vehicle.transmission;
-        fields.fuel.value = vehicle.fuel;
-        fields.mileage.value = vehicle.mileage;
-        fields.color.value = vehicle.color;
-        fields.location.value = vehicle.location;
-        fields.description.value = vehicle.description;
+        fields.brand.value = data.brand;
+        fields.model.value = data.model;
+        fields.year.value = data.year;
+        fields.price.value = data.price;
+        fields.status.value = data.status;
+        fields.transmission.value = data.transmission;
+        fields.fuel.value = data.fuel;
+        fields.mileage.value = data.mileage;
+        fields.color.value = data.color;
+        fields.location.value = data.location;
+        fields.description.value = data.description;
 
-        if (vehicle.image) {
-            previewImage.src = vehicle.image;
+        currentImages = data.images || [];
+        if (currentImages.length > 0) {
+            previewImage.src = currentImages[0];
         }
 
         updatePreview();
@@ -226,78 +152,58 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
-    fields.images.addEventListener("change", (event) => {
-        const file = event.target.files[0];
-
-        if (!file) {
-            return;
-        }
-
-        if (!file.type.startsWith("image/")) {
-            showMessage("Selecciona un archivo de imagen válido.", "error");
-            event.target.value = "";
-            return;
-        }
+    fields.images.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (!file.type.startsWith("image/")) { showMessage("Selecciona una imagen válida.", "error"); e.target.value = ""; return; }
 
         const reader = new FileReader();
-
-        reader.onload = function (e) {
-            previewImage.src = e.target.result;
+        reader.onload = (ev) => {
+            imageBase64 = ev.target.result;
+            previewImage.src = imageBase64;
         };
-
         reader.readAsDataURL(file);
     });
 
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
-
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
         if (!validateForm()) return;
 
-        const vehicles = getVehicles();
-        const index = vehicles.findIndex(item => item.id === vehicleId);
-
-        if (index === -1) {
-            showMessage("No se encontró el vehículo.", "error");
-            return;
-        }
-
-        vehicles[index] = {
-            ...vehicles[index],
+        const body = {
             brand: fields.brand.value.trim(),
             model: fields.model.value.trim(),
-            year: fields.year.value.trim(),
-            price: fields.price.value.trim(),
-            status: fields.status.value.trim(),
-            transmission: fields.transmission.value.trim(),
-            fuel: fields.fuel.value.trim(),
-            mileage: fields.mileage.value.trim(),
+            year: Number(fields.year.value),
+            price: Number(fields.price.value),
+            status: fields.status.value,
+            transmission: fields.transmission.value,
+            fuel: fields.fuel.value,
+            mileage: Number(fields.mileage.value),
             color: fields.color.value.trim(),
             location: fields.location.value.trim(),
             description: fields.description.value.trim(),
-            image: previewImage.src || ""
+            images: imageBase64 ? [imageBase64] : currentImages,
         };
 
-        saveVehicles(vehicles);
-        showMessage("Vehículo actualizado correctamente.", "success");
+        const { res, data } = await apiFetch(`/api/vehicles/${vehicleId}`, {
+            method: "PUT",
+            body: JSON.stringify(body),
+        });
 
-        setTimeout(() => {
-            window.location.href = "./vehicle.my.html";
-        }, 1000);
+        if (!res.ok) {
+            showMessage(data.message || "Error al actualizar el vehículo.", "error");
+            return;
+        }
+
+        showMessage("Vehículo actualizado correctamente.", "success");
+        setTimeout(() => { window.location.href = "./vehicle.my.html"; }, 1000);
     });
 
-    logoutLink.addEventListener("click", (event) => {
-        event.preventDefault();
+    logoutLink.addEventListener("click", (e) => {
+        e.preventDefault();
         clearToken();
         sessionStorage.removeItem("userName");
         window.location.href = "../auth/login.html";
     });
 
-    try {
-        const ok = await requireAuth();
-        if (!ok) return;
-    } catch (error) {
-        console.error("Error en requireAuth:", error);
-    }
-
-    loadVehicle();
+    await loadVehicle();
 });
