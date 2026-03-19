@@ -16,7 +16,7 @@
             <a href="../public/home.html" class="brand">
                 <img src="../../img/logo.png" alt="TicoAutos logo" class="logo">
             </a>
-            
+
             <nav class="nav-links">
                 <a href="./dashboard.html" class="active">Dashboard</a>
                 <a href="./vehicle.my.html">Mis vehículos</a>
@@ -95,26 +95,7 @@
                     </div>
                 </article>
 
-                <article class="card panel-card">
-                    <div class="panel-head">
-                        <h2>Actividad reciente</h2>
-                    </div>
 
-                    <ul class="activity-list">
-                        <li>
-                            <strong>Nueva consulta recibida</strong>
-                            <p>Recibiste una pregunta sobre Toyota Corolla 2020.</p>
-                        </li>
-                        <li>
-                            <strong>Vehículo actualizado</strong>
-                            <p>Editaste la información de Hyundai Tucson 2019.</p>
-                        </li>
-                        <li>
-                            <strong>Cambio de estado</strong>
-                            <p>Marcaste Honda CR-V 2017 como vendido.</p>
-                        </li>
-                    </ul>
-                </article>
             </div>
 
             <div class="dashboard-column">
@@ -125,18 +106,12 @@
 
                     <div class="summary-box">
                         <div class="summary-item">
-                            <span>Vehículo con más visitas</span>
-                            <strong>Toyota Corolla 2020</strong>
-                        </div>
-
-                        <div class="summary-item">
                             <span>Última publicación</span>
-                            <strong>Nissan Sentra 2020</strong>
+                            <strong id="lastPublication">—</strong>
                         </div>
-
                         <div class="summary-item">
                             <span>Última consulta</span>
-                            <strong>Hace 2 horas</strong>
+                            <strong id="lastQuery">—</strong>
                         </div>
                     </div>
                 </article>
@@ -154,12 +129,11 @@
 
                         <div class="status-row">
                             <span>Vehículos disponibles</span>
-                            <span class="badge badge-success">4</span>
+                            <span class="badge badge-success" id="availableBadge">—</span>
                         </div>
-
                         <div class="status-row">
                             <span>Mensajes pendientes</span>
-                            <span class="badge badge-warning">5</span>
+                            <span class="badge badge-warning" id="messagesBadge">—</span>
                         </div>
                     </div>
                 </article>
